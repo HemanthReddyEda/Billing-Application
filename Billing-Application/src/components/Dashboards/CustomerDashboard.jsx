@@ -10,7 +10,7 @@ const CustomerDashboard = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
+        const response = await axios.get('http://localhost:8080/api/products');
         // Ensure response data is an array
         if (Array.isArray(response.data)) {
           setProducts(response.data);

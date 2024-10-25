@@ -11,7 +11,7 @@ const InvoiceList = () => {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const response = await axios.get('/api/invoices');
+        const response = await axios.get('http://localhost:8080/api/invoices');
         setInvoices(response.data);
       } catch (error) {
         console.error('Error fetching invoices:', error);
@@ -29,7 +29,7 @@ const InvoiceList = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
+        const response = await axios.get('http://localhost:8080/api/products');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -45,14 +45,15 @@ const InvoiceList = () => {
     setSelectedInvoice(invoice);
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setSelectedInvoice(null);
     // Refresh the invoice list
-    const fetchInvoices = async () => {
-      const response = await axios.get('/api/invoices');
+    try {
+      const response = await axios.get('http://localhost:8080/api/invoices');
       setInvoices(response.data);
-    };
-    fetchInvoices();
+    } catch (error) {
+      console.error('Error refreshing invoices:', error);
+    }
   };
 
   return (
@@ -66,7 +67,14 @@ const InvoiceList = () => {
           </li>
         ))}
       </ul>
-      <InvoiceForm invoice={selectedInvoice} onSubmit={handleRefresh} customers={customers} products={products} />
+      {selectedInvoice && (
+        <InvoiceForm 
+          invoice={selectedInvoice} 
+          onSubmit={handleRefresh} 
+          customers={customers} 
+          products={products} 
+        />
+      )}
     </div>
   );
 };

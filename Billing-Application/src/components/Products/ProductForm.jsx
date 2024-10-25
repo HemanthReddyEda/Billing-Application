@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ProductForm = ({ products = [], onSubmit }) => {
-  const [productList, setProductList] = useState(products.length ? products : [{ productId: '', name: '', description: '', price: '', quantity: '' }]);
+  const [productList, setProductList] = useState(products.length ? products : [{ productId: '', name: '', description: '', price: '', quantity: '', imageUrl: '' }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -12,7 +12,7 @@ const ProductForm = ({ products = [], onSubmit }) => {
   };
 
   const handleAddProduct = () => {
-    setProductList([...productList, { productId: '', name: '', description: '', price: '', quantity: '' }]);
+    setProductList([...productList, { productId: '', name: '', description: '', price: '', quantity: '', imageUrl: '' }]);
   };
 
   const handleSubmit = async (e) => {
@@ -25,13 +25,14 @@ const ProductForm = ({ products = [], onSubmit }) => {
           name: product.name, 
           description: product.description,
           price: product.price, 
-          quantity: product.quantity 
+          quantity: product.quantity,
+          imageUrl: product.imageUrl // Include imageUrl in the data
         };
 
         if (product.id) {
-          return axios.put(`/api/products/${product.id}`, data);
+          return axios.put(`http://localhost:8080/api/products/${product.id}`, data);
         } else {
-          return axios.post('/api/products', data);
+          return axios.post('http://localhost:8080/api/products', data);
         }
       });
 
@@ -83,6 +84,14 @@ const ProductForm = ({ products = [], onSubmit }) => {
             name="quantity"
             placeholder="Quantity"
             value={product.quantity}
+            onChange={(e) => handleChange(index, e)}
+            required
+          />
+          <input
+            type="text"
+            name="imageUrl"
+            placeholder="Image URL"
+            value={product.imageUrl}
             onChange={(e) => handleChange(index, e)}
             required
           />

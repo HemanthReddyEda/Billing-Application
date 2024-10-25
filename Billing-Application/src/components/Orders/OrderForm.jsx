@@ -21,7 +21,7 @@ const OrderForm = ({ product, onClose }) => {
     };
 
     try {
-      await axios.post('/api/orders', orderData); // Send order data to the backend
+      await axios.post('http://localhost:8080/api/orders', orderData); // Send order data to the backend
       setSuccess(true);
       onClose(); // Close the order form on success
     } catch (error) {

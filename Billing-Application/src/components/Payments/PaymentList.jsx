@@ -9,7 +9,7 @@ const PaymentList = ({ invoiceId }) => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get(`/api/payments/invoice/${selectedInvoiceId}`);
+        const response = await axios.get(`http://localhost:8080/api/payments/invoice/${selectedInvoiceId}`);
         setPayments(response.data);
       } catch (error) {
         console.error('Error fetching payments:', error);
@@ -22,7 +22,7 @@ const PaymentList = ({ invoiceId }) => {
   const handleRefresh = () => {
     // Refresh the payment list
     const fetchPayments = async () => {
-      const response = await axios.get(`/api/payments/invoice/${selectedInvoiceId}`);
+      const response = await axios.get(`http://localhost:8080/api/payments/invoice/${selectedInvoiceId}`);
       setPayments(response.data);
     };
     fetchPayments();

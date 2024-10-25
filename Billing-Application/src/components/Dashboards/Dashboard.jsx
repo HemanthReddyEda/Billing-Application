@@ -8,8 +8,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsResponse = await axios.get('/api/products');
-        const ordersResponse = await axios.get('/api/orders');
+        const productsResponse = await axios.get('http://localhost:8080/api/products');
+        const ordersResponse = await axios.get('http://localhost:8080/api/orders');
         
         setProducts(productsResponse.data);
         setOrders(Array.isArray(ordersResponse.data) ? ordersResponse.data : []); // Ensure orders is an array

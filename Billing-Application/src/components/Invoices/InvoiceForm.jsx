@@ -14,9 +14,9 @@ const InvoiceForm = ({ invoice = {}, onSubmit }) => {
 
     try {
       if (invoice.id) {
-        await axios.put(`/api/invoices/${invoice.id}`, data);
+        await axios.put(`http://localhost:8080/api/invoices/${invoice.id}`, data);
       } else {
-        await axios.post('/api/invoices', data);
+        await axios.post('http://localhost:8080/api/invoices', data);
       }
       onSubmit(); // Call the parent component's refresh function
     } catch (error) {
@@ -56,7 +56,7 @@ const InvoiceForm = ({ invoice = {}, onSubmit }) => {
             value={product.quantity}
             onChange={(e) => {
               const newProducts = [...products];
-              newProducts[index].quantity = e.target.value;
+              newProducts[index].quantity = parseFloat(e.target.value) || 0; // Ensure it's a number
               setProducts(newProducts);
             }}
             required
@@ -67,7 +67,7 @@ const InvoiceForm = ({ invoice = {}, onSubmit }) => {
             value={product.price}
             onChange={(e) => {
               const newProducts = [...products];
-              newProducts[index].price = e.target.value;
+              newProducts[index].price = parseFloat(e.target.value) || 0; // Ensure it's a number
               setProducts(newProducts);
             }}
             required

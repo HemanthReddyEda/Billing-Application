@@ -9,7 +9,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
+        const response = await axios.get('http://localhost:8080/api/products');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -20,7 +20,6 @@ const ProductList = () => {
   }, []);
 
   const handleOrder = (product) => {
-    console.log(product);
     setSelectedProduct(product); // Set the selected product for ordering
   };
 
@@ -30,7 +29,8 @@ const ProductList = () => {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            {product.name} - ${product.price}
+            {product.imageUrl && <img src={product.imageUrl} alt={product.name} style={{ width: '100px', height: '100px' }} />} {/* Display product image */}
+            <p>{product.name} - ${product.price}</p>
             <button onClick={() => handleOrder(product)}>Order</button> {/* Button to order the product */}
           </li>
         ))}
